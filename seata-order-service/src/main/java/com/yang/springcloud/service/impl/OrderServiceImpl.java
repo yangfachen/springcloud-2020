@@ -5,6 +5,7 @@ import com.yang.springcloud.entities.Order;
 import com.yang.springcloud.service.AccountService;
 import com.yang.springcloud.service.OrderService;
 import com.yang.springcloud.service.StorageService;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
      * 简单说：下订单->扣库存->减余额->改状态
      */
     @Override
-    //@GlobalTransactional(name = "fsp-create-order",rollbackFor = Exception.class)
+    @GlobalTransactional(name = "fsp-create-order",rollbackFor = Exception.class)
     public void create(Order order)
     {
         log.info("----->开始新建订单");
@@ -48,6 +49,8 @@ public class OrderServiceImpl implements OrderService {
         log.info("----->订单微服务开始调用账户，做扣减Money");
         accountService.decrease(order.getUserId(),order.getMoney());
         log.info("----->订单微服务开始调用账户，做扣减end");
+
+        int a = 1/0;
 
         //4 修改订单状态，从零到1,1代表已经完成
         log.info("----->修改订单状态开始");

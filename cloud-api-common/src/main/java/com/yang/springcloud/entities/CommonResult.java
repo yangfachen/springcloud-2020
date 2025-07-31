@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ *
  * @ClassName CommonResult
  * @Description TODO
  * @Author yangchen
